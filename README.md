@@ -36,5 +36,7 @@ Repo to contain elk learning notes
 ### Sharding
 * Dividing the data into multiple pieces.
 * Index is divided into multiple shards.
-* Each shards are saved in different nodes based on the capacity. Enables horizontal scaling.
+* Each shards are saved in different nodes based on the capacity. 
 * A node can contain shards of multiple indices.
+* Running parallel queries on different shards is also possible to enhance speed.
+* Long story short - > **Elastic Enables horizontal scaling via sharding.**
