@@ -24,11 +24,17 @@ Repo to contain elk learning notes
 * Additional tools for elk
 * Elastic sql is a popular tool which can convert sql into Query DSL.
 
+### Architecture overview
+* Elastics has clusters.
+* Cluster contains -> nodes. 
+* Node stores data.
+* Cross cluster search is not common/ cross cluster quries are costly(Computer + Network I/O). 
+* Cluster must contain logical group of data.
+* Unit of data -> document / json objects.
+* Documents are grouped into indices. 
 
-cluster -> nodes. 
-nodes stores data.
-cross cluster search is not common. 
-logical difference.
-unit of data -> document / json objects.
-documents are grouped into indexes. 
-logically related.
+### Sharding
+* Dividing the data into multiple pieces.
+* Index is divided into multiple shards.
+* Each shards are saved in different nodes based on the capacity. Enables horizontal scaling.
+* A node can contain shards of multiple indices.
