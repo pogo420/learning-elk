@@ -23,3 +23,12 @@ Repo to contain elk learning notes
 ### What is Xpack?
 * Additional tools for elk
 * Elastic sql is a popular tool which can convert sql into Query DSL.
+
+
+cluster -> nodes. 
+nodes stores data.
+cross cluster search is not common. 
+logical difference.
+unit of data -> document / json objects.
+documents are grouped into indexes. 
+logically related.
