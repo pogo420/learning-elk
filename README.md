@@ -40,3 +40,17 @@ Repo to contain elk learning notes
 * A node can contain shards of multiple indices.
 * Running parallel queries on different shards is also possible to enhance speed.
 * Long story short - > **Elastic Enables horizontal scaling via sharding.**
+
+### Replication
+* Replication is index level.
+* When we divide the index into multiple shards.
+* If replication is enabled, shards are duplicated.
+* Here is the example:
+![](images/replication_idea.png)
+* Primary _shard_ + replicated _shards_ is called replication group.
+* Replication enabled high availability.
+* CPU parallel ops improve performance, if multiple replication shards are saved in a node.
+
+### Snapshot
+* It's a backup before applying changes.
+* To recover the previous state of data. 
