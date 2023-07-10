@@ -54,3 +54,47 @@ Repo to contain elk learning notes
 ### Snapshot
 * It's a backup before applying changes.
 * To recover the previous state of data. 
+
+### Index 
+* creation:
+```
+PUT /products
+{
+  "settings": {
+    "number_of_replicas": 2,
+    "number_of_shards": 2
+  }
+}
+```
+
+### Documents
+* Adding docments:
+```
+# Adding a document with auto generated doc id
+POST /products/_doc
+{
+  "name": "Coffee Maker",
+  "price": 64,
+  "in_stock": 10
+}
+
+# supplying document id explicity
+PUT /products/_doc/100
+{
+  "name": "Toster",
+  "price": 64,
+  "in_stock": 4
+}
+```
+* Updating a document:
+```
+# Updating a doc
+# Importnat: Documents are imutable, during update we replace the document. They are not actually updated. 
+POST /products/_update/100
+{
+"doc":{
+  "in_stock": 3,
+  "ola": true  
+  }
+}
+```
