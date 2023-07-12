@@ -154,3 +154,10 @@ PUT /products/_doc/100
 DELETE /products/_doc/100
 ```
 
+### Routing
+* Adding, reading , deleting and updating documents in a shard is called routing.
+* Elastic uses a simple transperent strategy but we can customize it based on the requirement.
+
+### Elastic fault tolerance 
+* elastic manages fault by keeping replicas.
+* Its perfect for distrubuted data.
