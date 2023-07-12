@@ -98,3 +98,41 @@ POST /products/_update/100
   }
 }
 ```
+### Scripting in elastic search queries 
+* Here are the examples of scripts:
+```
+POST /products/_update/100
+{
+  "script": {
+    "source": "ctx._source.in_stock++"
+  }
+}
+
+POST /products/_update/100
+{
+  "script": {
+    "source": "ctx._source.in_stock += params.quantity",
+    "params": {
+      "quantity": 2
+    }
+  }
+}
+```
+* We can see how its modifies a document based on a script.
+
+### Upsets 
+* Provision to apply a script if doc exists else we create the document, here is the example
+```
+# upsert 
+POST /products/_update/101
+{
+  "script": {
+    "source": "ctx._source.in_stock++"
+  },
+  "upsert": {
+    "name": "BoomKala",
+    "price": 99,
+    "in_stock": 7
+  }
+}
+```
