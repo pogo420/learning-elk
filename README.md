@@ -161,3 +161,28 @@ DELETE /products/_doc/100
 ### Elastic fault tolerance 
 * elastic manages fault by keeping replicas.
 * Its perfect for distrubuted data.
+
+### Concurrency
+* Issue can arise when two or more requests plans to update the document.
+* To prevent that we use two metadata, with documents
+```
+{
+  "_seq_no": 9,
+  "_primary_term": 2
+}
+``` 
+* When ever we update a document these metadata changes.
+* During update we add these metadata, if these are matching data is not updated other wise data is updated.
+* Request example
+```
+POST /products/_update/100?if_primary_term=2&if_seq_no=10
+{
+  "script": {
+    "source": "ctx._source.in_stock += params.quantity",
+    "params": {
+      "quantity": 2
+    }
+  }
+}
+```
+* Remember its a optimistic concurrency not full proof like RDBMS.
