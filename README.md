@@ -121,7 +121,7 @@ POST /products/_update/100
 * We can see how its modifies a document based on a script.
 
 ### Upsets 
-* Provision to apply a script if doc exists else we create the document, here is the example
+* Provision to apply a script if doc exists, else we create the document, here is the example
 ```
 # upsert 
 POST /products/_update/101
@@ -136,3 +136,21 @@ POST /products/_update/101
   }
 }
 ```
+
+### Replacing documents:
+* Here is the sample, similar to adding doc
+```
+PUT /products/_doc/100
+{
+  "name": "Toster",
+  "price": 64,
+  "in_stock": 4
+}
+```
+
+### Deleting
+* Simple example below
+```
+DELETE /products/_doc/100
+```
+
