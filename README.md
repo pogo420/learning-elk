@@ -186,3 +186,22 @@ POST /products/_update/100?if_primary_term=2&if_seq_no=10
 }
 ```
 * Remember its a optimistic concurrency not full proof like RDBMS.
+
+### Update by query
+* We can update multiple documents.
+* Here is the snippet
+```
+POST /products/_update_by_query
+{
+  "script": {
+    "source": "ctx._source.in_stock += params.quantity",
+    "params": {
+      "quantity": 2
+    }
+  },
+  "query": {
+    "match_all": {}
+  }
+}
+```
+* Query determines the domain of data to apply the script.
