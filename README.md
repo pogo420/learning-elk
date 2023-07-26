@@ -205,3 +205,53 @@ POST /products/_update_by_query
 }
 ```
 * Query determines the domain of data to apply the script.
+
+### Delete by query
+* We can delete multiple documents.
+* Here is the snippet
+```
+POST /products/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+* Query determines the domain of data to apply the script.
+
+### Bulk
+* We can add multiple documents.
+* Here is the snippet
+```
+POST /products/_bulk
+{"index":{}}
+{"name": "BoomKala1","price": 99,"in_stock": 7}
+{"index":{}}
+{"name": "BoomKala2","price": 98,"in_stock": 6}
+{"index":{}}
+{"name": "BoomKala3","price": 97,"in_stock": 5}
+{"index":{}}
+{"name": "BoomKala4","price": 96,"in_stock": 10}
+{"index":{}}
+{"name": "BoomKala5","price": 95,"in_stock": 17}
+```
+
+### Upload via curl
+* New line delimited json as above
+* command
+```
+curl -XPOST "https://192.168.0.149:9200/products/_bulk" -H "kbn-xsrf: reporting" -H "Content-Type: application/ndjson"  --data-binary "@data_file.json"
+```
+* data_file.json content
+```
+{"index":{}}
+{"name": "BoomKala1","price": 99,"in_stock": 7}
+{"index":{}}
+{"name": "BoomKala2","price": 98,"in_stock": 6}
+{"index":{}}
+{"name": "BoomKala3","price": 97,"in_stock": 5}
+{"index":{}}
+{"name": "BoomKala4","price": 96,"in_stock": 10}
+{"index":{}}
+{"name": "BoomKala5","price": 95,"in_stock": 17}
+```
