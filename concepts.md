@@ -43,18 +43,36 @@
 ## Search Queries:
 * There are two types:
    * term queries:
-      * Place holder
+      * They are used for keyword search.
+      * These queries search in inverted index of index to retieve documents.
+      * These queries signifies whether keyword is present or not. 
    * match queries
-      * Place holder
+      * They are exact match query , searching a complete sentence with cases etc.
+      * These queies generetes scores.
+      * Scores signifies how good the query is matching.
 
-## ELastic dsl flow:
-* Place holder
+## Elastic dsl flow:
+* Query execution flow:
+    * Query reaches a node. It as acts as a coordinating node.
+    * Query is distribited to different nodes.
+    * Draft data is returned to the coordinating nodes via worker nodes.
+    * Coordinating nodes creates final data and returns to the client.
+
+* Source selection and query are executed in individual nodes.
+* Aggregation, sorting and pagination are done in coordinating node.
 
 ## Size/From:
 * Place holder
 
 ## Filter context vs Query context:
-* Place holder
+* An elastic search query can be executed in filter or query context.
+
+| Filter context | Query context |
+|---|---|
+|Yes No queries | How good is the match|
+| Scores are *not* calculated | Scores are calculated |
+| Cached | *Not* Cached |
+| bool - `filer` and `must not` |  `query` parameter |
 
 ## Bool query:
 * Place holder
