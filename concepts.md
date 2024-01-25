@@ -68,8 +68,8 @@
 ```
 Suppose we have 5 worker node and 1 coordinating node.
 When we say in query `size: x and from: y`.
-Each worker send x+y documents to coordinating node not y; reason worker does not know the actual order or documents.
-So coordinating have to process (x+y) *(5+1) to send y documents to the querying client.
+Each worker send x+y documents to coordinating node not y; reason worker does not know the actual order of documents.
+So coordinating node have to process (x+y)*(5+1) documents to send y documents, that will be send to the querying client.
 ```
 
 ## Filter context vs Query context:
