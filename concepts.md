@@ -62,7 +62,15 @@
 * Aggregation, sorting and pagination are done in coordinating node.
 
 ## Size/From:
-* Place holder
+* Size and From are used for pagination.
+* When we go to larger value of `From` we find query are slower.
+* Lets undertand the situtation:
+```
+Suppose we have 5 worker node and 1 coordinating node.
+When we say in query `size: x and from: y`.
+Each worker send x+y documents to coordinating node not y; reason worker does not know the actual order or documents.
+So coordinating have to process (x+y) *(5+1) to send y documents to the querying client.
+```
 
 ## Filter context vs Query context:
 * An elastic search query can be executed in filter or query context.
