@@ -20,7 +20,8 @@
 
 * We can change number of replica shards not primary.
 * Replication is done prevent data loss during node failure.
-* Image place holder:
+* Image will summarize:
+![cluster_overview](./images/es_cluster_overview.JPG)
 
 
 ## Data related concepts:
@@ -58,8 +59,8 @@
     * Draft data is returned to the coordinating nodes via worker nodes.
     * Coordinating nodes creates final data and returns to the client.
 
-* Source selection and query are executed in individual nodes.
-* Aggregation, sorting and pagination are done in coordinating node.
+* Source selection,  query and aggregation are executed in individual nodes.
+* sorting, highlight and pagination are done in coordinating node.
 
 ## Size/From:
 * Size and From are used for pagination.
@@ -83,13 +84,73 @@ So coordinating node have to process (x+y)*(5+1) documents to send y documents, 
 | bool - `filer` and `must not` |  `query` parameter |
 
 ## Bool query:
-* Place holder
+* Its a query with following structure:
+
+```
+"bool" : {
+   "must": {
+         // data must be present in matching document - scoring - *query context*.
+         // All queries must match.  Logical: AND
+   },
+   "filter": {
+         // data must be present in matching document - **NO** scoring - *filter context*. 
+   },
+   "should": {
+         // data must be present in matching document - scoring - *query context*. 
+         // If these clauses match, they increase the _score; otherwise, they have no effect. 
+         // They are simply used to refine the relevance score for each document.
+         // Acts as logical OR if used alone
+   },
+   "must_not": {
+         // data must **NOT** be present in matching document - **NO** scoring - *filter context*. 
+   },
+   "minimum_should_match" : 1 // minimum should clause needs to be matched
+}
+```
 
 ## Range Query:
-* Place holder
+* Query data based on range of data.
+```
+{
+  "query": {
+    "range": {
+      "age": {
+        "gte": 10,
+        "lte": 20
+      }
+    }
+  }
+}
+```
+* Supported parameters: `gte, lte, gt, lt`
+* Parameter `relation`
+   * Its effective in range datatypes.
+   * Following table will summarize:
+
+   |relation|comment|
+   |---|---|
+   |intersect| doc intersect query range|
+   |within | doc within query range|
+   |contains| doc contains query range|
 
 ## Datetime math:
-* Place holder
+* Few buitin keywords are there:
+   * now
+   * d/M/y/h/m/s
+   * `now-2d` or `now+2w`
+   * `now-2d/d` => corrected to single day.
 
 ## Aggregations:
-* Place holder
+* Aggregation works on all documents that match the query; Independent of size parameter.
+* When we do size=0; aggregation results are cached.
+* docValue:
+   * Hashmap: doc_id: [terms, of, the, doc]
+   * Aids in aggregation.
+   * It's created by default for all fields. We can disable it to reduce space in shard. 
+* Bucket aggregation is most polular:
+   * term act as group by.
+   * histogram and date histogram: for interval group by.
+
+## Questions topic to cover:
+* Boost and scoring.
+* OR in filter context.

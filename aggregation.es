@@ -28,3 +28,25 @@ GET /mylogs-apache-v2*/_search
         }
     }
 }
+
+
+GET /mylogs-apache-v2*/_search
+{   "_source" : ["clientip", "verb"],
+    "size": 30,
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match": {
+                        "verb": "GET"
+                    }
+                },
+                {
+                    "match": {
+                        "verb": "POST"
+                    }
+                }
+            ]
+        }
+    }
+}
