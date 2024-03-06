@@ -23,11 +23,16 @@
 * Image will summarize:
 ![cluster_overview](./images/es_cluster_overview.JPG)
 
+## Default analyzer
+* When a documet is indexed, a default analyzer processes all fields, it follows there three steps grossly:
+   * Cleanup (Skipped by default but used by custom analyzer). 
+   * Tokens w.r.t white spaces.
+   * Lower case transforms.
 
 ## Data related concepts:
 * There are two important data structure in elastic search:
    * Inverted index: Keeps track of documents, Returns document id based on the query.
-      * Hash table of terms lower case: document id  
+      * Hash table of terms, lower case: document id  
    *  Source: stores the json documents.
 * Joins are super costly in ES, data redundency is OK.
 * Avoid wildcard query - use term queries.
@@ -49,6 +54,7 @@
       * These queries signifies whether keyword is present or not. 
    * match queries
       * They are exact match query , searching a complete sentence with cases etc.
+      * Analyzer is run on the query to generate terms, same analyzer used to indexed the document. Hence slower.
       * These queies generetes scores.
       * Scores signifies how good the query is matching.
 
@@ -90,7 +96,7 @@ So coordinating node have to process (x+y)*(5+1) documents to send y documents, 
 "bool" : {
    "must": {
          // data must be present in matching document - scoring - *query context*.
-         // All queries must match.  Logical: AND
+         // All queries must match.  Logical: AND.
    },
    "filter": {
          // data must be present in matching document - **NO** scoring - *filter context*. 
@@ -107,6 +113,7 @@ So coordinating node have to process (x+y)*(5+1) documents to send y documents, 
    "minimum_should_match" : 1 // minimum should clause needs to be matched
 }
 ```
+* For multiple query support replace {} with [].
 
 ## Range Query:
 * Query data based on range of data.
@@ -140,6 +147,31 @@ So coordinating node have to process (x+y)*(5+1) documents to send y documents, 
    * `now-2d` or `now+2w`
    * `now-2d/d` => corrected to single day.
 
+## Wildcard/Prefix/Regex queries:
+* It's possible with pattern but better to avoid.
+* It's not recommended as performance will be worse due to es elastic architecture.
+* Matches token from inverted index.
+
+
+## Match query:
+* Sample:
+```
+GET /_search
+{
+  "query": {
+    "match": {
+      "<field>": {
+        "query": "<data>"
+      }
+    }
+  }
+}
+```
+* Custom options like selection of 
+   * analyzer and others are available.
+
+* reference [doc](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html).
+
 ## Aggregations:
 * Aggregation works on all documents that match the query; Independent of size parameter.
 * When we do size=0; aggregation results are cached.
@@ -150,6 +182,11 @@ So coordinating node have to process (x+y)*(5+1) documents to send y documents, 
 * Bucket aggregation is most polular:
    * term act as group by.
    * histogram and date histogram: for interval group by.
+
+
+## Analyzers:
+* We can have custom analyzers for a specific columns.
+* It has to assigned duuring index.
 
 ## Questions topic to cover:
 * Boost and scoring.
